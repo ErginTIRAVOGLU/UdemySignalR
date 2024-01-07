@@ -61,6 +61,10 @@
                 $("#clientCount").text(clientCount);
             })
 
+            connection.on("Notify", (countText)=>{
+                $("#notify").html(`<div class="alert alert-success">${countText}</div>`)
+            });
+
             $("#btnNameSave").click(() => { 
                 connection.invoke("SendName", $("#txtName").val()).catch((err) => {
                     console.log(err)
@@ -93,10 +97,12 @@
             </div>
             <div class="clearfix"></div>
         </div>
-        <div class="col-md-8 offset-2">
-            <ul id="namesList" class="list-group">
+    
+        <div id="notify"></div>
+    </div>
+    <div class="col-md-8 offset-2">
+        <ul id="namesList" class="list-group">
 
-            </ul>
-        </div>
+        </ul>        
     </div>
 </div>
