@@ -1,4 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using UdemySignalR.API.Hubs;
+using UdemySignalR.API.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,11 +15,19 @@ builder.Services.AddCors(options =>
          */
     });
 });
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"));
+});
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(o =>
+{
+    o.EnableDetailedErrors = true;
+});
 
 var app = builder.Build();
 
